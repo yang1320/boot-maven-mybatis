@@ -1,0 +1,57 @@
+配置：
+	注意：
+		Spring Boot 对静态资源映射提供了默认配置
+		Spring Boot 默认将 /** 所有访问映射到以下目录：
+			classpath:/static
+			classpath:/public
+			classpath:/resources
+			classpath:/META-INF/resources
+			手动指明配置后，会使Spring Boot的默认配置失效，也就是说，/public /resources 等默认配置不能使用。
+
+	资源获取：结合打包方式及最终打包后的目录结构而定;jar运行涉及target\classes目录、war运行涉及WEB-INF\classes目录
+		打包后结构参见target目录。可以依据路径的相对关系获取资源位置：
+			this.getClass().getResource("/static/uploadAndDown/");	---部署时相对于类路径的位置
+		war:E:\install1\tomcat\apache-tomcat-8.0.1\webapps\boot-maven-mybatis\WEB-INF\classes
+		jar:E:\Users\yang\workspace\boot-maven-mybatis\target\boot-maven-mybatis\BOOT-INF\classes
+		
+		
+
+
+其他：
+	调用请求方法时不传递请求参数时且参数@RequestParam(required=false)默认为null
+	@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。
+
+
+跨域访问：
+	传统情况下在java代码里访问restful服务，一般使用Apache的HttpClient。不过此种方法使用起来太过繁琐。
+	spring提供了一种简单便捷的模板类来进行操作，这就是RestTemplate。
+
+	摘要：http://www.jianshu.com/p/c9644755dd5e
+	接口提供方的类或接口需使用@RestController修饰,对应的方法参数要用@RequestBody修饰
+	
+	说明:Spring提供的RestTemplate可用于访问Rest服务的客户端，其提供了多种便捷访问远程Http服务的方法，但其并没有实现异步调用的功能。
+		Spring4.0提供的AsyncRestTemplate，该类可实现异步非阻塞处理http请求。
+	
+
+	
+Mybaits:xml
+	resultType="String" 对应的一条记录的返回类型。 parameterType="int" 对应的是传入参数的类型
+	
+	
+	
+上传下载：
+	SpringMVC异常：org.springframework.web.multipart.MultipartException: The current request is not a multipart request
+	1，此异常出现在使用springmvc做文件上传的时候
+	2，原因是form的属性没有设置正确，必须是enctype="multipart/form-data" method="post" ,get是不能做文件上传的
+	
+	上传：取得文本域对象Multipart(Servlet中为FileItem),获取输入流,创建文件、输出流。创建字节缓存数组，写入输出流。
+	下载：根据response取得ServletOutputStream，输出字节流。
+			//response默认编码与web容器设置有关，默认ISO-8859-1.
+		//当向页面输出的是字节流时不用设置编码格式，否则需要设置编码（针对中文时）
+		
+		
+
+打包运行：
+	jar 或者war。需要插件：maven为spring-boot-maven-plugin。 
+	部署：war包放置于Servlet容器相应位置 如Tomcat为webapps目录； jar使用java -jar命令运行。
+	
