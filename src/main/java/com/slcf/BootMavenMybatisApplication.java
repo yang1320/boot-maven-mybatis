@@ -1,5 +1,8 @@
 package com.slcf;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -18,20 +21,20 @@ import com.alibaba.druid.support.http.WebStatFilter;
 
 
 
-@SpringBootApplication
-@EnableTransactionManagement 
-@MapperScan("com.slcf.mapper")
-@ServletComponentScan //扫描Servlet
-@ImportResource("classpath:/applicationContext*.xml")
-@ConfigurationProperties("classpath:/application.properties")
+//@SpringBootApplication
+//@EnableTransactionManagement 
+//@MapperScan("com.slcf.mapper")
+//@ServletComponentScan //扫描Servlet
+//@ImportResource("classpath:/applicationContext*.xml")
+//@ConfigurationProperties("classpath:/application.properties")
 //@EnableScheduling		//定时器总开关
 public class BootMavenMybatisApplication{
 //	public static final Logger log = Logger.getLogger(BootMavenMybatisApplication.class);
 	
 	public static void main(String[] args) {
     	System.out.println("----------------jar启动！！！！！");
-        new SpringApplication().setWebEnvironment(true);
-        SpringApplication.run(BootMavenMybatisApplication.class, args);
+    	new  SpringApplication().setWebEnvironment(false);
+    	SpringApplication.run(BootMavenMybatisApplication.class, args);
 
 	}
 	
@@ -51,7 +54,7 @@ public class BootMavenMybatisApplication{
 	    	FilterRegistrationBean frb=new FilterRegistrationBean(wsf);
 	    	frb.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
 	    	frb.addUrlPatterns("/*");
-	        return frb;  
+	        return frb;    
 	    }  
 
 
