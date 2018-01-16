@@ -81,10 +81,10 @@ public class DeptController {
 		
 		request.setAttribute("value", "value1111");
 		
-		Object obj=new AsyncRestTemplate().postForEntity("http://localhost:8085/dw/show",new HttpEntity<Map>(map),String.class);
-		System.out.println(obj);
+		//Object obj=new AsyncRestTemplate().postForEntity("http://localhost:8085/dw/show",new HttpEntity<Map>(map),String.class);
+//		System.out.println(obj);
 		Thread.sleep(2*1000);
-//		Object obj=new RestTemplate().postForObject("http://localhost:8085/dw/show", map, Object.class);
+		Object obj=new RestTemplate().postForObject("http://localhost:8085/dw/show", map, Object.class);
 		System.out.println(obj);
 		JSONArray jobj=JSONArray.fromObject(obj);
 		
@@ -95,5 +95,34 @@ public class DeptController {
 		return "ssss";
 	}
 	
+	@RequestMapping("/call")
+	@ResponseBody
+	public void testCallPhone() throws InterruptedException{
+		System.out.println("into testCallPhone");
+		Map map=new HashMap();
+		map.put("name", "张三");
+		map.put("age", "21");
+		int i=0;
+		while(true){
+
+			Object obj=new AsyncRestTemplate().getForEntity(
+					"http://lxbjs.baidu.com/cb/call?uid=6240816&g=90661&tk=2F916E821B7D2CC79A8B7F4A2DA564BCEBF8973E3F5FC342330738C3CC5D8CBA5014A427C0DF76C485276D97BF809A8708DB3DFBF3851025404DBA506C79DFEFC202F1D4FCB7060D14ACF1890F504486&vtel=15984892050&bdcbid=9be52cff-789a-4b1f-8c38-11a6c05c4e50&callback=_lxb_jsonp_1516069934302_",
+					Object.class);
+			
+			System.out.println(++i+"次obj值为:"+JSONArray.fromObject(obj));
+			Thread.sleep(1000*60*5);
+		}
+//		return "调用结束！";
+	}
+	
+	
+	@RequestMapping("/call")
+	@ResponseBody
+	public void changeIp() throws InterruptedException{
+		int i=0;
+		while(true){
+			Thread.sleep(1000*60*5);
+		}
+	}
 	
 }

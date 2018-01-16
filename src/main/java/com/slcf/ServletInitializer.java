@@ -8,13 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.support.http.StatViewServlet;
@@ -24,24 +24,30 @@ import com.alibaba.druid.support.http.WebStatFilter;
 @EnableTransactionManagement 
 @MapperScan("com.slcf.mapper")
 @ServletComponentScan //扫描Servlet
-//@ImportResource("classpath:/applicationContext*.xml")
-//@EnableScheduling
+@ImportResource("classpath:/applicationContext*.xml")
+@ConfigurationProperties("classpath:/application.properties")
 public class ServletInitializer extends SpringBootServletInitializer implements
 		EmbeddedServletContainerCustomizer {
 
 	public static void main(String[] args) {
 		System.out.println("war启动！！！！！");
-		new  SpringApplication().setWebEnvironment(true);
-		SpringApplication.run(ServletInitializer.class, args);
+		 new SpringApplicationBuilder(ServletInitializer.class).profiles("server")
+         .properties("transport=local").run(args);
+
+//		new SpringApplication().setWebEnvironment(true);
+//		SpringApplication.run(ServletInitializer.class, args);
 
 	}
 
-//	@Override
-//	protected SpringApplicationBuilder configure(
-//			SpringApplicationBuilder application) {
-//		System.out.println("application Json解析结果："+JSONObject.fromObject(application));
-//		return application.sources(ServletInitializer.class);
-//	}
+	@Override
+	protected SpringApplicationBuilder configure(
+			SpringApplicationBuilder application) {
+		System.out.println("进入加载方法configure");
+		application.profiles("classpath:application.properties");
+//		application.profiles("classpath:applicationContext.xml");
+		System.out.println(JSONObject.fromObject(application));
+		return application.sources(ServletInitializer.class);
+	}
 
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
@@ -50,9 +56,8 @@ public class ServletInitializer extends SpringBootServletInitializer implements
 		container.setPort(8083);
 		container.setDisplayName("bbm");
 		container.setContextPath("/123");
-		System.out.println("container Json解析结果："+JSONObject.fromObject(container));
 	}
-	
+
 	@Bean
 	public  ServletRegistrationBean configServlet(){
 		StatViewServlet svs=new StatViewServlet();
@@ -67,8 +72,7 @@ public class ServletInitializer extends SpringBootServletInitializer implements
 	    	FilterRegistrationBean frb=new FilterRegistrationBean(wsf);
 	    	frb.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
 	    	frb.addUrlPatterns("/*");
-	        return frb;    
+	        return frb;  
 	    }  
-
 
 }
