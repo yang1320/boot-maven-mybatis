@@ -25,7 +25,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 @MapperScan("com.slcf.mapper")
 @ServletComponentScan //扫描Servlet
 @ImportResource("classpath:/applicationContext*.xml")
-@ConfigurationProperties("classpath:/application.properties")
+@ConfigurationProperties("application.properties")
 public class ServletInitializer extends SpringBootServletInitializer implements
 		EmbeddedServletContainerCustomizer {
 

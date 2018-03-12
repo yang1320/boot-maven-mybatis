@@ -14,9 +14,13 @@
 		war:E:\install1\tomcat\apache-tomcat-8.0.1\webapps\boot-maven-mybatis\WEB-INF\classes
 		jar:E:\Users\yang\workspace\boot-maven-mybatis\target\boot-maven-mybatis\BOOT-INF\classes
 		
+	日志：
+		springboot推荐的日志类库是slf4j、日志系统为logback	
+		log4j.rootLogger=info,error,DEBUG,CONSOLE //注意顺序位置，CONSOLE放最后即所有信息控制台都会参与输出
+		详见：http://blog.csdn.net/dr_guo/article/details/50718063
+		使用第三方jar使日志控制台彩色输出，可能发生乱码：如日志记录到数据库
+		log4j.properties 配置 jdbc.url不使用带参否则在linux部署会发生JDK安全错误（可解决？）
 		
-
-
 其他：
 	调用请求方法时不传递请求参数时且参数@RequestParam(required=false)默认为null
 	@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。
@@ -37,6 +41,14 @@
 Mybaits:xml
 	resultType="String" 对应的一条记录的返回类型。 parameterType="int" 对应的是传入参数的类型
 	
+	
+	mybatis默认是属性名和数据库字段名一一对应的，即 
+		数据库表列：user_name 
+		实体类属性：user_name
+	但是java中一般使用驼峰命名 
+		数据库表列：user_name 
+		实体类属性：userName
+	在Springboot中，可以通过设置map-underscore-to-camel-case属性为true来开启驼峰功能。
 	
 	
 上传下载：
