@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -26,6 +27,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 @ServletComponentScan //扫描Servlet
 @ImportResource("classpath:/applicationContext*.xml")
 @ConfigurationProperties("application.properties")
+@EnableCaching
 public class ServletInitializer extends SpringBootServletInitializer implements
 		EmbeddedServletContainerCustomizer {
 

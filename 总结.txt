@@ -26,6 +26,9 @@
 	@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。
 
 
+请求/响应：浏览器中转请求过快无法捕获，可以通过限速暂停控制台获取请求及数据。
+
+
 跨域访问：
 	传统情况下在java代码里访问restful服务，一般使用Apache的HttpClient。不过此种方法使用起来太过繁琐。
 	spring提供了一种简单便捷的模板类来进行操作，这就是RestTemplate。
