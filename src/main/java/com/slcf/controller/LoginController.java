@@ -20,11 +20,13 @@ import org.springframework.stereotype.Controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.slcf.bean.Permission;
 import com.slcf.mapper.PermissionMapper;
 import com.slcf.mapper.UserMapper;
 import com.slcf.tool.Encryption;
+
 import java.lang.Exception;
 
 @Controller
@@ -70,7 +72,15 @@ public class LoginController {
 	
 	@RequestMapping("/")
 	public String welcome(HttpServletRequest request){
+		System.out.println("进入 welcome！");
 		request.getSession().invalidate();
 		return "login";
+	}
+	
+	@RequestMapping("/test")
+	@ResponseBody
+	public String test(HttpServletRequest request){
+		System.out.println("into test!");
+		return "test!";
 	}
 }

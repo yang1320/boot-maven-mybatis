@@ -16,7 +16,9 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.core.Ordered;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
@@ -32,7 +34,7 @@ public class ServletInitializer extends SpringBootServletInitializer implements
 		EmbeddedServletContainerCustomizer {
 
 	public static void main(String[] args) {
-		System.out.println("war启动！！！！！");
+		System.out.println("jar main方式启动！！！！！");
 		 new SpringApplicationBuilder(ServletInitializer.class).profiles("server")
          .properties("transport=local").run(args);
 
@@ -44,7 +46,7 @@ public class ServletInitializer extends SpringBootServletInitializer implements
 	@Override
 	protected SpringApplicationBuilder configure(
 			SpringApplicationBuilder application) {
-		System.out.println("进入加载方法configure");
+		System.out.println("进入加载方法configure;war web容器下启动！！！！！");
 		application.profiles("classpath:application.properties");
 //		application.profiles("classpath:applicationContext.xml");
 		System.out.println(JSONObject.fromObject(application));
@@ -76,5 +78,7 @@ public class ServletInitializer extends SpringBootServletInitializer implements
 	    	frb.addUrlPatterns("/*");
 	        return frb;  
 	    }  
+	  
+
 
 }

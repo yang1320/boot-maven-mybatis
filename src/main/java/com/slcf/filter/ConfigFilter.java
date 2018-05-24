@@ -12,6 +12,7 @@ public class ConfigFilter extends WebMvcConfigurerAdapter{
 		
 		//对访问路径带有per关键字进行权限校验
 		registry.addInterceptor(new PermissionFilter()).addPathPatterns("/per/*");
+		registry.addInterceptor(new RequestAccessFilter()).addPathPatterns("/*");
 		super.addInterceptors(registry);
 	}
 	

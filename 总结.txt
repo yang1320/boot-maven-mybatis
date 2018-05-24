@@ -70,3 +70,24 @@ Mybaits:xml
 	jar 或者war。需要插件：maven为spring-boot-maven-plugin。 
 	部署：war包放置于Servlet容器相应位置 如Tomcat为webapps目录； jar使用java -jar命令运行。
 	
+	spring boot打成jar包了,但是webapp下面的jsp页面无法访问：由于jar 、war打包后目录结构不同(仅web-inf 和boot-inf结构不同？)，
+	导致访问不了jar中jsp资源,可以使用war+servlet容器运行 或者  使用java -jar XXX.war 的方式运行即可。
+	
+	
+SVN:冲突出现原因总结起来一句话：在不同版本的同一个位置出现了不同的东西。
+	具体解释如下：
+
+	版本：每一次提交都会是当前项目的一个版本，会有一个编号；
+	不同版本：冲突一定是出现在不同版本间的，通常是出现在相隔两个版本号的两个版本之间；
+	同一个位置：这里指的是同一个文件路径，或者同一个文件路径下同一个文件中的同一行等；
+	不同的东西：这里说的是不同的代码，或者不同的路径，或者不同的文件；
+	
+	
+	
+springboot 两种运行方式的不同，两种打包（jar\war）后项目结构的不同;
+jar运行：显示页面html中的资源引用是相对运行项目的路径的
+
+构建项目结构出错时，尝试project facets重构 项目。
+
+使用thymeleaf模板返回路径字符串不需加前缀"/"（当于根模板路径拼接时会自动添加？？？）,否则离开IDE环境运行要报错。
+		
